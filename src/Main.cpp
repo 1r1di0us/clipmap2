@@ -19,46 +19,52 @@
 #include <windows.h>
 #include <mmsystem.h>
 #include <GL/glut.h>
+
 using namespace std;
+
 #include "glsl.h"
-#pragma comment(lib,"winmm.lib")
-///////////////////////////////////////////
 #include "Bmp.h"
 #include "ogl.h"
-///////////////////////////////////////////
+
+#pragma comment(lib,"winmm.lib")
+
 int grid= 64;				// patch resolution
 int levels=5;				// LOD levels
 int width=2048,height=2048; // heightmap dimensions
-///////////////////////////////////////////
 
 void DrawScene()
 {
-	if ( GetAsyncKeyState(VK_ESCAPE) )  exit(0);
+	if (GetAsyncKeyState(VK_ESCAPE))  exit(0); // escape key to exit tbe program (ESCAPE)
 
-	POINT cursor;
+	POINT cursor; // point object corresponding to mouse position
 	GetCursorPos(&cursor); // mouse pointer position
 
-	bool	wireframe= GetAsyncKeyState(VK_SPACE);	// render wireframe
-	bool	topdown	 = GetAsyncKeyState(VK_RETURN);	// view top-down
+	bool	wireframe = GetAsyncKeyState(VK_SPACE);	// render wireframe (HOLD SPACE)
+	bool	topdown = GetAsyncKeyState(VK_RETURN);	// view top-down (HOLD ENTER)
+	
 	float	viewangle= float(cursor.x)/5.0;
 	vec3f	viewpos((timeGetTime() >> 2) & ((1 << 17) - 1), -(float(cursor.y) / 500.0) * 0.1 - 0.05, 0);
 
+	//set background to black
 	glClearDepth(1.0f);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	//other openGL stuff
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
-	static int tex_heightmap=0;
-	static int tex_terrain=0;
+	static int tex_heightmap = 0; // heightmap value
+	static int tex_terrain = 0; // texture value
 
-	static bool init=true;
-	static Shader shader("Shader");
+	static bool init = true;
+	static Shader shader("S_1"); // create shader
 
-	static int vbo=0;
-	static std::vector<float> vert;
+	static int vbo = 0; // vertex buffer object (stores vertex data ie. triangles)
+	static std::vector<float> vert; // vector of vert heights?
+	//not done adding comments yet
 
 	if(init)
 	{
