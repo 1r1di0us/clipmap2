@@ -41,7 +41,7 @@ void DrawScene()
 	bool	wireframe= GetAsyncKeyState(VK_SPACE);	// render wireframe
 	bool	topdown	 = GetAsyncKeyState(VK_RETURN);	// view top-down
 	float	viewangle= float(cursor.x)/5.0;
-	vec3f	viewpos ( (timeGetTime()>>2)&((1<<17)-1) , -(float(cursor.y)/1000.0)* 0.1-0.01 , 0 );
+	vec3f	viewpos((timeGetTime() >> 2) & ((1 << 17) - 1), -(float(cursor.y) / 500.0) * 0.1 - 0.05, 0);
 
 	glClearDepth(1.0f);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

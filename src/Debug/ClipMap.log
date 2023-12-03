@@ -1,0 +1,4 @@
+﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  Main.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1389,5): warning MSB8012: TargetPath(C:\Users\zrgru\source\repos\clipmap2\src\Debug\ClipMaps.exe) does not match the Linker's OutputFile property value (C:\Users\zrgru\source\repos\clipmap2\bin32\ClipMaps.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+  ClipMap.vcxproj -> C:\Users\zrgru\source\repos\clipmap2\src\Debug\ClipMaps.exe
