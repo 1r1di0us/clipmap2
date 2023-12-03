@@ -30,7 +30,7 @@ using namespace std;
 
 int grid= 64;				// patch resolution
 int levels=5;				// LOD levels
-int width=2048,height=2048; // heightmap dimensions
+int width=2048,height=2048; // heightmap dimensions I think height is actually length.
 
 void DrawScene()
 {
@@ -66,84 +66,86 @@ void DrawScene()
 	static std::vector<float> vert; // vector of vert heights?
 	//not done adding comments yet
 
-	if(init)
+	if (init)
 	{
-		/*+++++++++++++++++++++++++++++++++++++*/
-		// terrain heightmap
-		Bmp bmp(width,height,32);
-		loopj(0,height) loopi(0,width)
+		// terrain heightmap - generates the heightmap
+		Bmp bmp(width, height, 32);
+		loopj(0, height) loopi(0, width)
 		{
-			float x= float(i)/float(width);
-			float y= float(j)/float(height);
-			float h = (sin(4*M_PI*x)+sin(4*M_PI*y)+sin(16*M_PI*x)*sin(16*M_PI*y))*0.125+0.5;
-			((float*)bmp.data)[i+j*width]=h;
-		}	
-		//bmp.load_float("../result.f32"); // <-- use this for loading raw float map from file
-		tex_heightmap = ogl_tex_new(width,height,GL_LINEAR_MIPMAP_LINEAR,GL_REPEAT,GL_LUMINANCE16F_ARB,GL_LUMINANCE,bmp.data, GL_FLOAT);
-		/*+++++++++++++++++++++++++++++++++++++*/
-		// terrain texture
-		loopj(0,height)	loopi(0,width) loopk(0,3)
-		{
-			bmp.data[(i+j*width)*3+k]=i^j^(k*192);
+			float x = float(i) / float(width); // x = i / width (gradually increasing % of width)
+			float y = float(j) / float(height); // y = j / height (gradually increasing % of height or rather length)
+			float h = (sin(4 * M_PI * x) + sin(4 * M_PI * y) + sin(16 * M_PI * x) * sin(16 * M_PI * y)) * 0.125 + 0.5; // calculate height based on x and y
+			((float*)bmp.data)[i + j * width] = h; // bmp.data is the height map we are adding in.
 		}
-		tex_terrain = ogl_tex_new(width,height,GL_LINEAR_MIPMAP_LINEAR,GL_REPEAT,GL_RGB,GL_RGB,bmp.data, GL_UNSIGNED_BYTE);
-		/*+++++++++++++++++++++++++++++++++++++*/
+		//bmp.load_float("../result.f32"); // <-- use this for loading raw float map from file
+		tex_heightmap = ogl_tex_new(width, height, GL_LINEAR_MIPMAP_LINEAR, GL_REPEAT, GL_LUMINANCE16F_ARB, GL_LUMINANCE, bmp.data, GL_FLOAT);
+
+		// terrain texture
+		loopj(0, height)	loopi(0, width) loopk(0, 3)
+		{
+			bmp.data[(i + j * width) * 3 + k] = i ^ j ^ (k * 192);
+		}
+		tex_terrain = ogl_tex_new(width, height, GL_LINEAR_MIPMAP_LINEAR, GL_REPEAT, GL_RGB, GL_RGB, bmp.data, GL_UNSIGNED_BYTE);
+
 		// driver info
 		std::cout << "GL_VERSION: " << glGetString(GL_VERSION) << std::endl;			//std::cout << "GL_EXTENSIONS: " << glGetString(GL_EXTENSIONS) << std::endl;
 		std::cout << "GL_RENDERER: " << glGetString(GL_RENDERER) << std::endl;
 		std::cout << "GL_VENDOR: " << glGetString(GL_VENDOR) << std::endl;
 		std::cout << "GLU_VERSION: " << gluGetString(GLU_VERSION) << std::endl;			//std::cout << "GLU_EXTENSIONS: " << gluGetString(GLU_EXTENSIONS) << std::endl;
 		std::cout << "GLUT_API_VERSION: " << GLUT_API_VERSION << std::endl;
-		/*+++++++++++++++++++++++++++++++++++++*/
+
 		// load shaders
-		shader.attach(GL_VERTEX_SHADER,"../shader/vs.txt");
-		shader.attach(GL_FRAGMENT_SHADER,"../shader/frag.txt");
+		shader.attach(GL_VERTEX_SHADER, "../shader/vs.txt");
+		shader.attach(GL_FRAGMENT_SHADER, "../shader/frag.txt");
 		shader.link();
-		/*+++++++++++++++++++++++++++++++++++++*/
+
 		// make vbo quad patch
-		loopj(0,grid+1)
-		loopi(0,grid+2)
+		loopj(0, grid + 1) // for loop, 0 < j < grid + 1, j++
+			loopi(0, grid + 2) // for loop, 0 < i < grid + 1, i++
 		{
-			loopk(0, ((i==0) ? 2 : 1) )
+			loopk(0, ((i == 0) ? 2 : 1)) // for loop, 0 < k < i [if (i==0) then i = 2, otherwise i = 1], k++
 			{
-				vert.push_back(float(i)/grid);
-				vert.push_back(float(j)/grid);
+				vert.push_back(float(i) / grid); // i / grid (% of grid)
+				vert.push_back(float(j) / grid); // j / grid (% of grid)
 				vert.push_back(0);
-			}			
+			}
 			++j;
-			loopk(0, ((i==grid+1) ? 2 : 1) )
+			loopk(0, ((i == grid + 1) ? 2 : 1)) // for loop, 0 < k < i [if (i == grid +1) then i = 2, otherwise i = 1], k++
 			{
-				vert.push_back(float(i)/grid);
-				vert.push_back(float(j)/grid);
+				vert.push_back(float(i) / grid); // i / grid (% of grid)
+				vert.push_back(float(j) / grid); // j / grid (% of grid)
 				vert.push_back(0);
 			}
 			--j;
 		}
-		/*+++++++++++++++++++++++++++++++++++++*/
-		glGenBuffers(1, (GLuint *)(&vbo));
+
+		//openGL stuff
+		glGenBuffers(1, (GLuint*)(&vbo));
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float)*vert.size(),&vert[0], GL_DYNAMIC_DRAW_ARB );
-		/*+++++++++++++++++++++++++++++++++++++*/
-		init=false;
-		/*+++++++++++++++++++++++++++++++++++++*/
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vert.size(), &vert[0], GL_DYNAMIC_DRAW_ARB);
+
+		init = false; //initialization complete
 	}
+
+	//openGL stuff
 	glMatrixMode( GL_PROJECTION);
 	glLoadIdentity();
 
+	// if top down view has been activated
 	if (topdown)
 	{
-		glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-		glRotatef(180,1,0,0);
-		wireframe^=1;
+		glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0); // aw an orthographic projection of the scene
+		glRotatef(180, 1, 0, 0); // rotate the camera by 180 degrees
+		wireframe ^= 1; // ??
 	}
 	else		 
 	{
 		int vp[4];
 		glGetIntegerv(GL_VIEWPORT, vp);
 		gluPerspective(90.0,float(vp[2])/float(vp[3]) , 0.0001, 1.0);
-		glTranslatef(0,viewpos.y,0);	// set height
-		glRotatef(130,1,0,0);		
-		glRotatef(viewangle,0,0,1);		// set rotation
+		glTranslatef(0, viewpos.y, 0);	// set height
+		glRotatef(130, 1, 0, 0); // rotate 130 degreessa	
+		glRotatef(viewangle, 0, 0, 1); // set rotation
 	}
 
 	matrix44 mat;
@@ -154,6 +156,7 @@ void DrawScene()
 	glEnableClientState(GL_VERTEX_ARRAY);					CHECK_GL_ERROR();
 	glVertexPointer  ( 3, GL_FLOAT,0, (char *) 0);			CHECK_GL_ERROR();
 
+	//openGL stuff
 	glEnable(GL_TEXTURE_2D);
 	glActiveTextureARB( GL_TEXTURE0 );
 	glBindTexture(GL_TEXTURE_2D, tex_heightmap);
@@ -171,10 +174,10 @@ void DrawScene()
 		-viewpos.x/float(2*512*grid),
 		-viewpos.z/float(2*512*grid),0,0);
 
-	loopi(0,levels)
+	loopi(0,levels) //for loop, i = 0; i < levels; ++i
 	{
-		float ox=(int(viewpos.x*(1<<i))&511)/float(512*grid);
-		float oy=(int(viewpos.z*(1<<i))&511)/float(512*grid);
+		float ox = (int(viewpos.x * (1 << i)) & 511) / float(512 * grid); // offsetx
+		float oy = (int(viewpos.z * (1 << i)) & 511) / float(512 * grid); // offsety
 
 		vec3f scale	(sxy*0.25,sxy*0.25,1);
 		shader.setUniform4f("scale" , scale.x,scale.y,1,1);	
@@ -213,14 +216,18 @@ void DrawScene()
 	glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);								CHECK_GL_ERROR();
 	glutSwapBuffers();
 }
-///////////////////////////////////////////
+
 int main(int argc, char **argv) 
 { 
-  glutInit(&argc, argv);  
-  glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);  
-  glutInitWindowSize(1024, 512);  
-  glutInitWindowPosition(0, 0);  
+  glutInit(&argc, argv);  // glutInit() using command-line arguments
+
+  // setting up window
+  glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_ALPHA | GLUT_DEPTH);  // set display mode
+  glutInitWindowSize(1024, 512); // set window size
+  glutInitWindowPosition(0, 0);  // set window position
   glutCreateWindow("Geometry Clipmaps Example (c) Sven Forstmann 2014");
+
+  // displaying scene
   glutDisplayFunc(DrawScene);
   glutIdleFunc(DrawScene);
   glewInit();
@@ -228,4 +235,3 @@ int main(int argc, char **argv)
   glutMainLoop();
   return 0;
 }
-///////////////////////////////////////////
