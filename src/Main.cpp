@@ -219,7 +219,7 @@ int main(int argc, char **argv)
   glutIdleFunc(DrawScene);
   glewInit();
   wglSwapIntervalEXT(0);
-  glutMainLoop();  
+  glutMainLoop();
   return 0;
 }
 ///////////////////////////////////////////
