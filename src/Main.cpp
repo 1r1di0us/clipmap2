@@ -20,6 +20,9 @@
 #include <mmsystem.h>
 #include <GL/glut.h>
 
+#define MOVESPEED 15 //forward/backward/left/right movement
+#define FLYSPEED 0.00025 //up/down movement
+
 using namespace std;
 
 #include "glsl.h"
@@ -31,19 +34,114 @@ using namespace std;
 int grid= 64;				// patch resolution
 int levels=5;				// LOD levels
 int width=2048,height=2048; // heightmap dimensions I think height is actually length.
+double	viewangle = 0;
+vec3f	viewpos(0, -0.06, 0);	
+bool debug = true;	// debug toggle (true for debugging mode, false for execution mode)
+POINT cursor; // point object corresponding to mouse position
 
+// controls movement throughout the scene. uses the arrow keys to control the x-z plane movmements and the shift 
+// and left control keys to control the y-axis movements. 
+
+// to do:
+// - add camera movement (control scheme becomes bundled when camera moves (ie. postive x becomes no longer left) and 
+// need to get camera to angle up down, rather than left right)
+// - wheel zoom would be pretty darn cool
+// - some sort of auto scrolling mode, screensaver style
+
+double degreesToRadians(double degrees) {
+	return degrees * (M_PI / 180);
+}
+
+vec3f normalize(vec3f inputvec) {
+	vec3f normvec;
+	double length = sqrt(inputvec.x * inputvec.x + inputvec.y * inputvec.y + inputvec.z * inputvec.z);
+	normvec.x = inputvec.x / length;
+	normvec.y = inputvec.y / length;
+	normvec.z = inputvec.z / length;
+	return normvec;
+}
+
+void move(vec3f &viewpos, POINT &cursor) {
+
+	// bools controlling movements
+	bool	moveforward = GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57); // move forward in the scene using the UP arrow key or W
+	bool	moveback = GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53); // move backward in the scene using the DOWN arrow key or S
+	bool	moveright = GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x41); // move right in the scene using  the RIGHT arrow key or A
+	bool	moveleft = GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x44); // move left in the scene using the LEFT arrow key or D
+	bool	moveup = GetAsyncKeyState(VK_SPACE); // move upwards in the scene using the SPACE key
+	bool	movedown = GetAsyncKeyState(VK_SHIFT); // move downwards in the scene using the SHIFT key
+
+	if (moveforward && moveback) moveforward = moveback = false;
+	if (moveleft && moveright) moveleft = moveright = false;
+	if (moveup && movedown) moveup = movedown = false; //moving in opposite directions stops movement
+
+	// apply mouse movements
+	viewangle = fmod((double(cursor.x) / 4.0), 360) - 180; //more than 360 degree rotation
+
+	// create direction vector:
+	vec3f forevec = normalize(vec3f(sin(degreesToRadians(viewangle)), 0, cos(degreesToRadians(viewangle)))); //forward movement
+	vec3f leftvec = normalize(vec3f(-forevec.z, 0, forevec.x)); //left movement
+
+	vec3f movevec = vec3f(0.0, 0.0, 0.0);
+
+	// apply keyboard movements
+	if (moveforward) { // made it more complicated to see if I could get movement to be the same speed in all directions
+		if (moveleft) {
+			movevec = normalize(forevec + leftvec);
+			moveleft = false;
+		}
+		else if (moveright) {
+			movevec = normalize(forevec - leftvec); // -leftvec == rightvec
+			moveright = false;
+		}
+		else {
+			movevec = forevec; // already normalized
+		}
+		moveforward = false;
+	}
+	if (moveback) {
+		if (moveleft) {
+			movevec = normalize(-forevec + leftvec); // -forevec == backvec
+			moveleft = false;
+		}
+		else if (moveright) {
+			movevec = normalize(-forevec - leftvec); // -leftvec == rightvec
+			moveright = false;
+		}
+		else {
+			movevec = -forevec; // already normalized
+		}
+		moveback = false;
+	}
+	if (moveleft && !moveforward && !moveback) { // if we are only moving left
+		movevec = leftvec; // already normalized
+		moveleft = false;
+	}
+	if (moveright && !moveforward && !moveback) { // if we are only moving right
+		movevec = -leftvec; // already normalized, -leftvec == rightvec
+		moveright = false;
+	}
+	// flight up and down will be its own thing
+	if (movedown && viewpos.y < -0.03) { viewpos.y += FLYSPEED; moveup = false; } // postive y is downwards, can't move too far down																		   // camera floor at y = -.03
+	if (moveup) { viewpos.y -= FLYSPEED; moveup = false; }	// negative y is upwards (no ceiling height)
+
+	// actually move the camera in x and z
+	viewpos += movevec * MOVESPEED;
+}
+ 
+// draws the scene. runs every single frame. press the ESCAPE key to end execution.
 void DrawScene()
 {
 	if (GetAsyncKeyState(VK_ESCAPE))  exit(0); // escape key to exit tbe program (ESCAPE)
 
 	POINT cursor; // point object corresponding to mouse position
 	GetCursorPos(&cursor); // mouse pointer position
-
-	bool	wireframe = GetAsyncKeyState(VK_SPACE);	// render wireframe (HOLD SPACE)
+	bool	wireframe = GetAsyncKeyState(VK_LCONTROL);	// render wireframe (HOLD LEFT CONTROL)
 	bool	topdown = GetAsyncKeyState(VK_RETURN);	// view top-down (HOLD ENTER)
 	
-	float	viewangle= float(cursor.x)/5.0;
-	vec3f	viewpos((timeGetTime() >> 2) & ((1 << 17) - 1), -(float(cursor.y) / 500.0) * 0.1 - 0.05, 0);
+	// apply keyboard and mouse movements
+	move(viewpos, cursor);
+	if (debug) cout << "PLAYERPOS | x: " << viewpos.x << ", y: " << viewpos.y << ", z: " << viewpos.z << " | MOUSEPOS | x: " << cursor.x << ", mouse y: " << cursor.y << ", viewangle: " << viewangle << endl;
 
 	//set background to black
 	glClearDepth(1.0f);
