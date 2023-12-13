@@ -66,8 +66,8 @@ void move(vec3f &viewpos, POINT &cursor) {
 	// bools controlling movements
 	bool	moveforward = GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57); // move forward in the scene using the UP arrow key or W
 	bool	moveback = GetAsyncKeyState(VK_DOWN) || GetAsyncKeyState(0x53); // move backward in the scene using the DOWN arrow key or S
-	bool	moveright = GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x41); // move right in the scene using  the RIGHT arrow key or A
-	bool	moveleft = GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x44); // move left in the scene using the LEFT arrow key or D
+	bool	moveright = GetAsyncKeyState(VK_RIGHT) || GetAsyncKeyState(0x44); // move right in the scene using  the RIGHT arrow key or A
+	bool	moveleft = GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41); // move left in the scene using the LEFT arrow key or D
 	bool	moveup = GetAsyncKeyState(VK_SPACE); // move upwards in the scene using the SPACE key
 	bool	movedown = GetAsyncKeyState(VK_SHIFT); // move downwards in the scene using the SHIFT key
 
@@ -80,7 +80,7 @@ void move(vec3f &viewpos, POINT &cursor) {
 
 	// create direction vector:
 	vec3f forevec = normalize(vec3f(sin(degreesToRadians(viewangle)), 0, cos(degreesToRadians(viewangle)))); //forward movement
-	vec3f leftvec = normalize(vec3f(-forevec.z, 0, forevec.x)); //left movement
+	vec3f leftvec = normalize(vec3f(forevec.z, 0, -forevec.x)); //left movement
 
 	vec3f movevec = vec3f(0.0, 0.0, 0.0);
 
