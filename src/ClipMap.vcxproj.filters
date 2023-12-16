@@ -50,4 +50,9 @@
       <Filter>shader</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\Downloads\test.bmp">
+      <Filter>src</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
