@@ -33,7 +33,7 @@ using namespace std;
 
 int grid= 64;				// patch resolution
 int levels=5;				// LOD levels
-int width=2048,height=2048; // heightmap dimensions I think height is actually length.
+int width=513,height=514; // heightmap dimensions I think height is actually length.
 double	viewangle = 0;
 vec3f	viewpos(0, -0.06, 0);	
 bool debug = true;	// debug toggle (true for debugging mode, false for execution mode)
@@ -167,7 +167,7 @@ void DrawScene()
 	if (init)
 	{
 		// terrain heightmap - generates the heightmap
-		Bmp bmp(width, height, 32);
+		Bmp bmp("test.bmp");
 		loopj(0, height) loopi(0, width)
 		{
 			float x = float(i) / float(width); // x = i / width (gradually increasing % of width)

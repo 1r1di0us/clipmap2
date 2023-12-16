@@ -1,4 +1,31 @@
 ﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  glew.cpp
   Main.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1389,5): warning MSB8012: TargetPath(C:\Users\zrgru\source\repos\clipmap2\src\Debug\ClipMaps.exe) does not match the Linker's OutputFile property value (C:\Users\zrgru\source\repos\clipmap2\bin32\ClipMaps.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
-  ClipMap.vcxproj -> C:\Users\zrgru\source\repos\clipmap2\src\Debug\ClipMaps.exe
+  Bmp.cpp
+  Generating Code...
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1389,5): warning MSB8012: TargetPath(C:\Users\erica\source\repos\clipmap2\src\Debug\ClipMaps.exe) does not match the Linker's OutputFile property value (C:\Users\erica\source\repos\clipmap2\bin32\ClipMaps.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+Bmp.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+     Creating library Debug\ClipMaps.lib and object Debug\ClipMaps.exp
+LINK : warning LNK4217: symbol '_glewInit' defined in 'glew.obj' is imported by 'Main.obj' in function '"void __cdecl ogl_init(void)" (?ogl_init@@YAXXZ)'
+LINK : warning LNK4217: symbol '___glewBindBuffer' defined in 'glew.obj' is imported by 'Main.obj' in function '"void __cdecl DrawScene(void)" (?DrawScene@@YAXXZ)'
+LINK : warning LNK4217: symbol '___glewBufferData' defined in 'glew.obj' is imported by 'Main.obj' in function '"void __cdecl DrawScene(void)" (?DrawScene@@YAXXZ)'
+LINK : warning LNK4217: symbol '___glewDeleteBuffers' defined in 'glew.obj' is imported by 'Main.obj' in function '"void __cdecl ogl_pbo_del(unsigned int)" (?ogl_pbo_del@@YAXI@Z)'
+LINK : warning LNK4217: symbol '___glewGenBuffers' defined in 'glew.obj' is imported by 'Main.obj' in function '"void __cdecl DrawScene(void)" (?DrawScene@@YAXXZ)'
+LINK : warning LNK4217: symbol '___glewAttachShader' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::link(void)" (?link@Shader@@QAEXXZ)'
+LINK : warning LNK4217: symbol '___glewCompileShader' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::attach(int,char *)" (?attach@Shader@@QAEXHPAD@Z)'
+LINK : warning LNK4217: symbol '___glewCreateProgram' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::link(void)" (?link@Shader@@QAEXXZ)'
+LINK : warning LNK4217: symbol '___glewCreateShader' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::attach(int,char *)" (?attach@Shader@@QAEXHPAD@Z)'
+LINK : warning LNK4217: symbol '___glewGetProgramInfoLog' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::link(void)" (?link@Shader@@QAEXXZ)'
+LINK : warning LNK4217: symbol '___glewGetProgramiv' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::link(void)" (?link@Shader@@QAEXXZ)'
+LINK : warning LNK4217: symbol '___glewGetShaderInfoLog' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::attach(int,char *)" (?attach@Shader@@QAEXHPAD@Z)'
+LINK : warning LNK4217: symbol '___glewGetShaderiv' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::attach(int,char *)" (?attach@Shader@@QAEXHPAD@Z)'
+LINK : warning LNK4217: symbol '___glewGetUniformLocation' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::setUniform1i(char *,int)" (?setUniform1i@Shader@@QAEXPADH@Z)'
+LINK : warning LNK4217: symbol '___glewLinkProgram' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::link(void)" (?link@Shader@@QAEXXZ)'
+LINK : warning LNK4217: symbol '___glewShaderSource' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::attach(int,char *)" (?attach@Shader@@QAEXHPAD@Z)'
+LINK : warning LNK4217: symbol '___glewUniform1i' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::setUniform1i(char *,int)" (?setUniform1i@Shader@@QAEXPADH@Z)'
+LINK : warning LNK4217: symbol '___glewUniform4f' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::setUniform4f(char *,float,float,float,float)" (?setUniform4f@Shader@@QAEXPADMMMM@Z)'
+LINK : warning LNK4217: symbol '___glewUseProgram' defined in 'glew.obj' is imported by 'Main.obj' in function '"public: void __thiscall Shader::begin(void)" (?begin@Shader@@QAEXXZ)'
+LINK : warning LNK4217: symbol '___glewActiveTextureARB' defined in 'glew.obj' is imported by 'Main.obj' in function '"void __cdecl DrawScene(void)" (?DrawScene@@YAXXZ)'
+LINK : warning LNK4217: symbol '___glewBindBufferARB' defined in 'glew.obj' is imported by 'Main.obj' in function '"void __cdecl DrawScene(void)" (?DrawScene@@YAXXZ)'
+LINK : warning LNK4217: symbol '___wglewSwapIntervalEXT' defined in 'glew.obj' is imported by 'Main.obj' in function '_main'
+  ClipMap.vcxproj -> C:\Users\erica\source\repos\clipmap2\src\Debug\ClipMaps.exe

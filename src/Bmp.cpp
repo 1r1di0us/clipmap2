@@ -68,24 +68,24 @@ void Bmp::load(const char* filename)
 	// error handling begins
 	if (filename == NULL)
 	{
-		printf("File not found %s !\n", filename); while (1);;
+		printf("(1) File not found %s !\n", filename); while (1);;
 	}
 	if ((char)filename[0] == 0)
 	{
-		printf("File not found %s !\n", filename); while (1);;
+		printf("(2) File not found %s !\n", filename); while (1);;
 	}
 	if ((handle = fopen(filename, "rb")) == NULL) // 'rb' for reading non-text files
 	{
-		printf("File not found %s !\n", filename); while (1);;
+		printf("(3) File not found %s !\n", filename); while (1);;
 	}
 	if (!fread(bmp, 11, 1, handle))
 	{
-		printf("Error reading file %s!\n", filename);
+		printf("(1) Error reading file %s!\n", filename);
 		while (1);
 	}
 	if (!fread(&bmp[11], (int)((unsigned char)bmp[10]) - 11, 1, handle))
 	{
-		printf("Error reading file %s!\n", filename);
+		printf("(2) Error reading file %s!\n", filename);
 		while (1);
 	}
 	// error handling ends
