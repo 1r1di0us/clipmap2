@@ -10,6 +10,9 @@
     <Filter Include="shader">
       <UniqueIdentifier>{9598472a-f3af-468e-b477-a16a6fc8fb2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{ec2de196-5b5b-4d45-b3a3-bb2f3fcb1036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glsl.h">
@@ -49,5 +52,16 @@
     <None Include="..\shader\vs.txt">
       <Filter>shader</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Images\test.bmp">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="..\Images\Mountain Range Height Map BMP.bmp">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="..\Images\Mountain Range Diffuse BMP.bmp">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

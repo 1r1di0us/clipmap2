@@ -95,8 +95,6 @@ void Bmp::load(const char* filename)
 	height = (int)((unsigned char)bmp[22]) + ((int)((unsigned char)(bmp[23])) << 8); // ??
 	bpp = bmp[28]; // bits per pixel
 
-	//printf("%s : %dx%dx%d Bit \n",filename,width,height,bpp);
-
 	if (data) free(data); // ?
 
 	int size = width * height * (bpp / 8); // size of the bitmap file? what is bpp?
@@ -122,7 +120,7 @@ void Bmp::save_float(const char* filename)
 void Bmp::load_float(const char* filename)
 {
 	FILE* fn;
-	if ((fn = fopen(filename, "rb")) == NULL)  error_stop("Bmp::load_float");
+	if ((fn = fopen(filename, "rb")) == NULL)  error_stop("Bmp::load_float Null ptr");
 	fread(data, 1, 4 * width * height, fn);
 	fclose(fn);
 }
