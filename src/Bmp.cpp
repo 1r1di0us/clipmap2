@@ -99,9 +99,10 @@ void Bmp::load(const char* filename)
 
 	if (data) free(data); // ?
 
-	int size = width * height * (bpp / 8); // size of the bitmap file? what is bpp?
+	int size = width * height * (bpp / 8); // size of the bitmap file?
 
-	data = (unsigned char*)malloc(size + 1);
+	data = (unsigned char*) malloc(size + 1);
+
 	fread(data, size, 1, handle); // read from the file
 
 	fclose(handle); // close the file

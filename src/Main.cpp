@@ -33,7 +33,7 @@ using namespace std;
 
 int grid= 64;				// patch resolution
 int levels=5;				// LOD levels
-int width=513,height=514; // heightmap dimensions I think height is actually length.
+int width=496,height=489; // heightmap dimensions I think height is actually length.
 double	viewangle = 0;
 vec3f	viewpos(0, -0.06, 0);	
 bool debug = true;	// debug toggle (true for debugging mode, false for execution mode)
@@ -167,15 +167,15 @@ void DrawScene()
 	if (init)
 	{
 		// terrain heightmap - generates the heightmap
-		Bmp bmp("test.bmp");
-		loopj(0, height) loopi(0, width)
-		{
-			float x = float(i) / float(width); // x = i / width (gradually increasing % of width)
-			float y = float(j) / float(height); // y = j / height (gradually increasing % of height or rather length)
-			float h = (sin(4 * M_PI * x) + sin(4 * M_PI * y) + sin(16 * M_PI * x) * sin(16 * M_PI * y)) * 0.125 + 0.5; // calculate height based on x and y
-			((float*)bmp.data)[i + j * width] = h; // bmp.data is the height map we are adding in.
-		}
-		//bmp.load_float("../result.f32"); // <-- use this for loading raw float map from file
+		Bmp bmp("C:/Users/erica/source/repos/clipmap2/src/test.bmp");
+		//loopj(0, height) loopi(0, width)
+		//{
+			//float x = float(i) / float(width); // x = i / width (gradually increasing % of width)
+			//float y = float(j) / float(height); // y = j / height (gradually increasing % of height or rather length)
+			//float h = (sin(4 * M_PI * x) + sin(4 * M_PI * y) + sin(16 * M_PI * x) * sin(16 * M_PI * y)) * 0.125 + 0.5; // calculate height based on x and y
+			//((float*)bmp.data)[i + j * width] = h; // bmp.data is the height map we are adding in.
+		//}
+		bmp.load_float("C:/Users/erica/source/repos/clipmap2/src/test.bmp"); // <-- use this for loading raw float map from file
 		tex_heightmap = ogl_tex_new(width, height, GL_LINEAR_MIPMAP_LINEAR, GL_REPEAT, GL_LUMINANCE16F_ARB, GL_LUMINANCE, bmp.data, GL_FLOAT);
 
 		// terrain texture

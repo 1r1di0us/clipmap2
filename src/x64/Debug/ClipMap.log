@@ -1,6 +1,4 @@
-﻿cl : command line  warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Main.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1389,5): warning MSB8012: TargetPath(C:\Users\erica\source\repos\clipmap2\src\x64\Debug\ClipMaps.exe) does not match the Linker's OutputFile property value (C:\Users\erica\source\repos\clipmap2\bin64\ClipMaps.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1389,5): warning MSB8012: TargetPath(C:\Users\erica\source\repos\clipmap2\src\x64\Debug\ClipMaps.exe) does not match the Linker's OutputFile property value (C:\Users\erica\source\repos\clipmap2\bin64\ClipMaps.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
   LINK : ..\bin64\ClipMaps.exe not found or not built by the last incremental link; performing full link
      Creating library x64\Debug\ClipMaps.lib and object x64\Debug\ClipMaps.exp
 LINK : warning LNK4217: symbol 'glewInit' defined in 'glew.obj' is imported by 'Main.obj' in function '"void __cdecl ogl_init(void)" (?ogl_init@@YAXXZ)'
