@@ -22,6 +22,7 @@
 
 #define MOVESPEED 15 //forward/backward/left/right movement
 #define FLYSPEED 0.00025 //up/down movement
+#define MOUSESENSITIVITY 1 / 3.0
 
 using namespace std;
 
@@ -34,8 +35,8 @@ using namespace std;
 int grid= 64;				// patch resolution
 int levels=5;				// LOD levels
 int width,height; // heightmap dimensions I think height is actually length.
-double	viewangle = 225;
-double	viewoffsetx = 0;
+double	viewangle = 225; // nice initial value
+double	viewoffsetx = 0; // not sure how to get view to work without making these global variables.
 double	initialView = 0;
 bool	initializedView = false;
 vec3f	viewpos(0, -0.06, 0);	
@@ -86,7 +87,7 @@ void move(vec3f &viewpos, double &viewangle, POINT &cursor) {
 			initialView = viewangle;
 			initializedView = true;
 		}
-		viewangle = fmod(initialView - ((double(cursor.x) - viewoffsetx) / 3.0), 360); //more than 360 degree rotation
+		viewangle = fmod(initialView - ((double(cursor.x) - viewoffsetx) * MOUSESENSITIVITY), 360);
 	}
 	if (!changeview) initializedView = false; //next time the user presses left mouse, we map the current view direction to the current mouse pos
 

@@ -191,6 +191,7 @@
     <ClInclude Include="..\ext\glew.h" />
     <ClInclude Include="..\ext\glxew.h" />
     <ClInclude Include="..\ext\wglew.h" />
+    <ClInclude Include="ogl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bmp.cpp" />
