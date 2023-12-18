@@ -104,6 +104,17 @@ public:
 		glUniform4f(loc, v0, v1, v2, v3);
 		CHECK_GL_ERROR();
 	}
+	void setUniform1f(char* varname, GLfloat v0)
+	{
+		GLint loc = glGetUniformLocation(program_handle, varname);
+		if (loc == -1)
+		{
+			printf("Variable \"%s\" in shader \"%s\" not found\n", varname, name.c_str());
+			while (1);;
+		};
+		glUniform1f(loc, v0);
+		CHECK_GL_ERROR();
+	}
 	void setUniform1i(char* varname, GLint v0)
 	{
 		GLint loc = glGetUniformLocation(program_handle, varname);

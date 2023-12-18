@@ -10,6 +10,9 @@
     <Filter Include="shader">
       <UniqueIdentifier>{9598472a-f3af-468e-b477-a16a6fc8fb2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{ec2de196-5b5b-4d45-b3a3-bb2f3fcb1036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glsl.h">
@@ -28,6 +31,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="core.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="ogl.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
@@ -49,5 +55,16 @@
     <None Include="..\shader\vs.txt">
       <Filter>shader</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Images\test.bmp">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="..\Images\Ridge Through Terrain BMP.bmp">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="..\Images\Ridge Through Terrain Height Map BMP.bmp">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

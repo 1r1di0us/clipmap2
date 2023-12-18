@@ -191,6 +191,7 @@
     <ClInclude Include="..\ext\glew.h" />
     <ClInclude Include="..\ext\glxew.h" />
     <ClInclude Include="..\ext\wglew.h" />
+    <ClInclude Include="ogl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bmp.cpp" />
@@ -200,6 +201,11 @@
   <ItemGroup>
     <None Include="..\shader\frag.txt" />
     <None Include="..\shader\vs.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Images\Ridge Through Terrain BMP.bmp" />
+    <Image Include="..\Images\Ridge Through Terrain Height Map BMP.bmp" />
+    <Image Include="..\Images\test.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
