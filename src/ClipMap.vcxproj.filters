@@ -66,5 +66,11 @@
     <Image Include="..\Images\Mountain Range Diffuse BMP.bmp">
       <Filter>Images</Filter>
     </Image>
+    <Image Include="..\Images\Ridge Through Terrain BMP.bmp">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="..\Images\Ridge Through Terrain Height Map BMP.bmp">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

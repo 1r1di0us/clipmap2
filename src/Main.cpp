@@ -189,8 +189,8 @@ void DrawScene()
 		//	((float*)bmp.data)[i + j * width] = h; // bmp.data is the height map we are adding in.
 		//}
 
-		Bmp bmp("../Images/Mountain Range Height Map BMP.bmp");
-		Bmp texbmp("../Images/Mountain Range Diffuse BMP.bmp");
+		Bmp bmp("../Images/Ridge Through Terrain Height Map BMP.bmp"); //
+		Bmp texbmp("../Images/Ridge Through Terrain BMP.bmp");
 		width = bmp.width;
 		height = bmp.height;
 		tex_heightmap = ogl_tex_bmp(bmp);
@@ -293,7 +293,7 @@ void DrawScene()
 		-viewpos.x/float(2*512*grid),
 		-viewpos.z/float(2*512*grid), 0, 0);
 
-	shader.setUniform1f("heightscale", -0.20); //vertical exaggeration
+	shader.setUniform1f("heightscale", -0.40); //vertical exaggeration
 
 	loopi(0,levels) //for loop, i = 0; i < levels; ++i
 	{
