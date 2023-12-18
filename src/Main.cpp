@@ -20,9 +20,10 @@
 #include <mmsystem.h>
 #include <GL/glut.h>
 
-#define MOVESPEED 15 //forward/backward/left/right movement
-#define FLYSPEED 0.00025 //up/down movement
-#define MOUSESENSITIVITY 1 / 3.0
+#define MOVESPEED 15 // forward/backward/left/right movement
+#define FLYSPEED 0.00025 // up/down movement
+#define MOUSESENSITIVITY 1 / 3.0 // pixels to degrees of rotation
+#define VERTICALEXAGGERATION -0.40 // scales the verticality of the heightmap. 
 
 using namespace std;
 
@@ -34,12 +35,12 @@ using namespace std;
 
 int grid= 64;				// patch resolution
 int levels=5;				// LOD levels
-int width,height; // heightmap dimensions I think height is actually length.
-double	viewangle = 225; // nice initial value
-double	viewoffsetx = 0; // not sure how to get view to work without making these global variables.
+int width,height;			// heightmap dimensions I think height is actually length.
+double	viewangle = 225;	// nice initial value so we are looking in the right direction
+double	viewoffsetx = 0;	// not sure how to get view to work without making these global variables.
 double	initialView = 0;
 bool	initializedView = false;
-vec3f	viewpos(0, -0.06, 0);	
+vec3f	viewpos(0, -0.25, 0);	//initial position
 bool debug = true;	// debug toggle (true for debugging mode, false for execution mode)
 POINT cursor; // point object corresponding to mouse position
 
@@ -154,7 +155,9 @@ void DrawScene()
 	
 	// apply keyboard and mouse movements
 	move(viewpos, viewangle, cursor);
-	if (debug) cout << "PLAYERPOS | x: " << viewpos.x << ", y: " << viewpos.y << ", z: " << viewpos.z << " | MOUSEPOS | x: " << cursor.x << ", mouse y: " << cursor.y << ", viewangle: " << viewangle << endl;
+
+	// print player information to the command prompt every frame.
+	//if (debug) cout << "PLAYERPOS | x: " << viewpos.x << ", y: " << viewpos.y << ", z: " << viewpos.z << " | MOUSEPOS | x: " << cursor.x << ", mouse y: " << cursor.y << ", viewangle: " << viewangle << endl;
 
 	//set background to black
 	glClearDepth(1.0f);
@@ -189,9 +192,9 @@ void DrawScene()
 		//	((float*)bmp.data)[i + j * width] = h; // bmp.data is the height map we are adding in.
 		//}
 
-		Bmp bmp("../Images/Ridge Through Terrain Height Map BMP.bmp"); //
-		Bmp texbmp("../Images/Ridge Through Terrain BMP.bmp");
-		width = bmp.width;
+		Bmp bmp("../Images/Ridge Through Terrain Height Map BMP.bmp"); // load the height map bmp file
+		Bmp texbmp("../Images/Ridge Through Terrain BMP.bmp"); // load the texture bmp file
+		width = bmp.width; //set global variables
 		height = bmp.height;
 		tex_heightmap = ogl_tex_bmp(bmp);
 		tex_terrain = ogl_tex_bmp(texbmp);
@@ -293,7 +296,7 @@ void DrawScene()
 		-viewpos.x/float(2*512*grid),
 		-viewpos.z/float(2*512*grid), 0, 0);
 
-	shader.setUniform1f("heightscale", -0.40); //vertical exaggeration
+	shader.setUniform1f("heightscale", VERTICALEXAGGERATION); //vertical exaggeration
 
 	loopi(0,levels) //for loop, i = 0; i < levels; ++i
 	{
