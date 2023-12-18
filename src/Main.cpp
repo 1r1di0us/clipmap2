@@ -44,15 +44,6 @@ vec3f	viewpos(0, -0.25, 0);	//initial position
 bool debug = true;	// debug toggle (true for debugging mode, false for execution mode)
 POINT cursor; // point object corresponding to mouse position
 
-// controls movement throughout the scene. uses the arrow keys to control the x-z plane movmements and the shift 
-// and left control keys to control the y-axis movements. 
-
-// to do:
-// - add camera movement (control scheme becomes bundled when camera moves (ie. postive x becomes no longer left) and 
-// need to get camera to angle up down, rather than left right)
-// - wheel zoom would be pretty darn cool
-// - some sort of auto scrolling mode, screensaver style
-
 double degreesToRadians(double degrees) {
 	return degrees * (M_PI / 180);
 }
@@ -65,6 +56,11 @@ vec3f normalize(vec3f inputvec) {
 	normvec.z = inputvec.z / length;
 	return normvec;
 }
+
+
+// controls movement throughout the scene. uses the arrow keys to control the x-z plane movmements and the space
+// and left alt keys to control the y-axis movements.
+// also controls the view direction of the camera by click-dragging with the left mouse button.
 
 void move(vec3f &viewpos, double &viewangle, POINT &cursor) {
 
