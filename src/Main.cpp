@@ -1,6 +1,10 @@
+//
+// Geometry Clipmaps Project
+// By Jesse Dirks and Eric Ross
+// 
 /////////////////////////////////////////////
 //
-// Geometry Clip-Maps Tutorial
+// Based on Geometry Clip-Maps Tutorial
 //
 // (C) by Sven Forstmann in 2014
 //
@@ -40,7 +44,7 @@ double	viewangle = 225;	// nice initial value so we are looking in the right dir
 double	viewoffsetx = 0;	// not sure how to get view to work without making these global variables.
 double	initialView = 0;
 bool	initializedView = false;
-vec3f	viewpos(0, -0.25, 0);	//initial position
+vec3f	viewpos(0, -0.25, 0);	// initial camera position
 bool debug = true;	// debug toggle (true for debugging mode, false for execution mode)
 POINT cursor; // point object corresponding to mouse position
 
@@ -57,10 +61,9 @@ vec3f normalize(vec3f inputvec) {
 	return normvec;
 }
 
-
-// controls movement throughout the scene. uses the arrow keys to control the x-z plane movmements and the space
+// Controls movement throughout the scene. uses the arrow keys to control the x-z plane movmements and the space 
 // and left alt keys to control the y-axis movements.
-// also controls the view direction of the camera by click-dragging with the left mouse button.
+// Click and drag with the left mouse button to change the view angle along the xz plane.
 
 void move(vec3f &viewpos, double &viewangle, POINT &cursor) {
 
@@ -75,7 +78,7 @@ void move(vec3f &viewpos, double &viewangle, POINT &cursor) {
 
 	if (moveforward && moveback) moveforward = moveback = false;
 	if (moveleft && moveright) moveleft = moveright = false;
-	if (moveup && movedown) moveup = movedown = false; //moving in opposite directions stops movement
+	if (moveup && movedown) moveup = movedown = false; // moving in opposite directions stops movement
 
 	// apply mouse movements
 	if (changeview) {
@@ -192,8 +195,8 @@ void DrawScene()
 		Bmp texbmp("../Images/Ridge Through Terrain BMP.bmp"); // load the texture bmp file
 		width = bmp.width; //set global variables
 		height = bmp.height;
-		tex_heightmap = ogl_tex_bmp(bmp);
-		tex_terrain = ogl_tex_bmp(texbmp);
+		tex_heightmap = ogl_tex_bmp(bmp); //sets the heightmap
+		tex_terrain = ogl_tex_bmp(texbmp); //sets the texture
 
 		//bmp.load_float("../Images/test2.bmp"); // <-- use this for loading raw float map from file
 		//tex_heightmap = ogl_tex_new(width, height, GL_LINEAR_MIPMAP_LINEAR, GL_REPEAT, GL_LUMINANCE16F_ARB, GL_LUMINANCE, bmp.data, GL_FLOAT);
